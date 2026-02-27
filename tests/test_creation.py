@@ -77,6 +77,9 @@ def verify_folders(root, config):
             f"{config['module_name']}/modeling",
         ]
 
+    if config["testing_framework"] != "none":
+        expected_dirs += ["tests"]
+
     if config["docs"] == "mkdocs":
         expected_dirs += ["docs/docs"]
 
@@ -139,6 +142,12 @@ def verify_files(root, config):
             "docs/docs/index.md",
             "docs/docs/getting-started.md",
         ]
+
+    if config["testing_framework"] != "none":
+        expected_files.append("tests/test_data.py")
+
+    if config["pre_commit"] == "yes":
+        expected_files.append(".pre-commit-config.yaml")
 
     expected_files.append(config["dependency_file"])
 

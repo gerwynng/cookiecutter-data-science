@@ -74,15 +74,29 @@ def config_generator(fast=False):
 
     # ensure linting and formatting options are run on code scaffold
     # otherwise, linting "passes" because one linter never runs on any code during tests
+    # ordering matters: rightmost dimensions cycle fastest, so put options that
+    # must alternate frequently (like include_code_scaffold) later in the product
     code_format_cycler = cycle(
         product(
             [
-                ("include_code_scaffold", opt)
-                for opt in cookiecutter_json["include_code_scaffold"]
+                ("type_checker", opt)
+                for opt in cookiecutter_json["type_checker"]
+            ],
+            [
+                ("pre_commit", opt)
+                for opt in cookiecutter_json["pre_commit"]
+            ],
+            [
+                ("testing_framework", opt)
+                for opt in cookiecutter_json["testing_framework"]
             ],
             [
                 ("linting_and_formatting", opt)
                 for opt in cookiecutter_json["linting_and_formatting"]
+            ],
+            [
+                ("include_code_scaffold", opt)
+                for opt in cookiecutter_json["include_code_scaffold"]
             ],
         )
     )

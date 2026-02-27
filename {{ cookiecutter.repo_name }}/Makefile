@@ -74,6 +74,17 @@ format:
 	black {{ cookiecutter.module_name }}
 {% endif %}
 
+{% if cookiecutter.type_checker != 'none' %}
+## Type check using {{ cookiecutter.type_checker }}
+.PHONY: typecheck
+typecheck:
+{%- if cookiecutter.type_checker == 'pyright' %}
+	pyright
+{%- elif cookiecutter.type_checker == 'mypy' %}
+	mypy .
+{%- endif %}
+{%- endif %}
+
 {% if cookiecutter.testing_framework != 'none' %}
 ## Run tests
 .PHONY: test

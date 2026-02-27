@@ -13,6 +13,12 @@ flake8_black_isort = [
 
 ruff = ["ruff"]
 
+pyright = ["pyright"]
+
+mypy = ["mypy"]
+
+pre_commit = ["pre-commit"]
+
 basic = [
     "ipython",
     "jupyterlab",

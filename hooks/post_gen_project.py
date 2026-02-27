@@ -8,7 +8,10 @@ from ccds.hook_utils.custom_config import write_custom_config
 from ccds.hook_utils.dependencies import (
     basic,
     flake8_black_isort,
+    mypy,
     packages,
+    pre_commit,
+    pyright,
     ruff,
     scaffold,
     write_dependencies,
@@ -39,6 +42,17 @@ Path("setup.cfg").unlink()
 # {% elif cookiecutter.linting_and_formatting == "flake8+black+isort" %}
 packages_to_install += flake8_black_isort
 # {% endif %}
+
+# {% if cookiecutter.type_checker == "pyright" %}
+packages_to_install += pyright
+# {% elif cookiecutter.type_checker == "mypy" %}
+packages_to_install += mypy
+# {% endif %}
+
+# {% if cookiecutter.pre_commit == "yes" %}
+packages_to_install += pre_commit
+# {% endif %}
+
 # track packages that are not available through conda
 pip_only_packages = [
     "awscli",
@@ -103,6 +117,10 @@ write_custom_config("{{ cookiecutter.custom_config }}")
 # Remove LICENSE if "No license file"
 if "{{ cookiecutter.open_source_license }}" == "No license file":
     Path("LICENSE").unlink()
+
+# {% if cookiecutter.pre_commit == "no" %}
+Path(".pre-commit-config.yaml").unlink()
+# {% endif %}
 
 # Make single quotes prettier
 # Jinja tojson escapes single-quotes with \u0027 since it's meant for HTML/JS

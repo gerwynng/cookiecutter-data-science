@@ -107,6 +107,41 @@ ccds https://github.com/drivendataorg/cookiecutter-data-science -c v1
 cookiecutter https://github.com/drivendataorg/cookiecutter-data-science -c v1
 ```
 
+## Dev version (fork)
+
+This fork adds **type checking** (pyright/mypy) and **pre-commit** hooks as optional features.
+
+### Install from local source
+
+```bash
+# Install as editable so changes take effect immediately
+pipx install -e "$(pwd)" --force
+```
+
+### Generate a project from local template
+
+```bash
+# Must pass the local repo path — bare `ccds` pulls from the upstream PyPI release
+ccds "$(pwd)"
+```
+
+### New options during project generation
+
+| Option | Choices | Default |
+|--------|---------|---------|
+| `type_checker` | none, pyright, mypy | none |
+| `pre_commit` | yes, no | yes |
+
+### Run tests
+
+```bash
+pip install -e .  # or use the pipx venv
+pip install pytest
+pytest -vvv -FFF tests/   # single config, fast
+pytest -vvv -FF tests/    # all configs, skip makefile
+pytest -vvv tests/         # all configs + makefile (slow, needs all env managers)
+```
+
 ## Contributing
 
 We welcome contributions! [See the docs for guidelines](https://cookiecutter-data-science.drivendata.org/contributing/).
